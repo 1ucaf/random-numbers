@@ -12,7 +12,7 @@ export function useFrequencyTest(
   subintervals: number,
   chi2Alpha: number
 ): string {
-  return useMemo(() => {
+ 
     // 1. Calcular el tamaño de la muestra n
     const n = data.length
 
@@ -45,5 +45,5 @@ export function useFrequencyTest(
         : 'Se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido'
 
     return result
-  }, [data, subintervals, chi2Alpha])
+  
 }

@@ -10,7 +10,7 @@ export function useRunsTest(
   data: number[],
   chi2AlphaN2: number
 ): string {
-  return useMemo(() => {
+
     // 1. Calcular el tamaño de la muestra n
     const n = data.length
 
@@ -57,5 +57,4 @@ export function useRunsTest(
         : 'Se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido'
 
     return result
-  }, [data, chi2AlphaN2])
 }

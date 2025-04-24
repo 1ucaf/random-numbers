@@ -12,7 +12,7 @@ export function useSeriesTest(
   x: number,
   chi2Alpha: number
 ): string {
-  return useMemo(() => {
+ 
     // 1. Calcular el número de pares n
     const n = pairs.length
 
@@ -52,5 +52,4 @@ export function useSeriesTest(
         : 'Se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido'
 
     return result
-  }, [pairs, x, chi2Alpha])
 }

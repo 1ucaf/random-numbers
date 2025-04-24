@@ -10,7 +10,7 @@ export function useKSTest(
   data: number[],
   dAlphaN: number
 ): string {
-  return useMemo(() => {
+  
     // 1. Calcular el tamaño de la muestra n
     const n = data.length
 
@@ -33,5 +33,4 @@ export function useKSTest(
         : 'Se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido'
 
     return result
-  }, [data, dAlphaN])
 }

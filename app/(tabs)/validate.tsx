@@ -19,7 +19,7 @@ export default function TestsScreen() {
     },
     {
       title: 'Prueba KS',
-      view: '/(tabs)/tests/KSTest',
+      view: '/(tabs)/tests/ksTest',
     },
     {
       title: 'Prueba de Series',

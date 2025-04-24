@@ -2,12 +2,47 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useAverageTest } from '@/hooks/useAverageTest';
+
+const averageTest = (data: number[], alpha: number): string => {
+  // Validar que el array no esté vacío
+  if (data.length === 0) {
+    console.error("El array de datos está vacío.");
+    return "El array de datos está vacío. Por favor, ingresa números válidos.";
+  }
+
+  // Validar que alpha sea un número válido
+  if (isNaN(alpha)) {
+    console.error("El valor de alpha no es válido.");
+    return "El valor de alpha no es válido. Por favor, ingresa un número válido.";
+  }
+
+  // 1. Calcular el tamaño de la muestra n
+  const n = data.length;
+
+  // 2. Calcular el promedio aritmético de los números
+  const sum = data.reduce((acc, val) => acc + val, 0);
+  const mean = sum / n;
+  console.log(sum, mean);
+
+  // 3. Calcular el estadístico Z0 usando la fórmula:
+  const numerator = mean - 0.5;
+  const denominator = Math.sqrt(1 / 12);
+  const z0 = (numerator * Math.sqrt(n)) / denominator;
+
+  // 4. Comparar |Z0| con alpha:
+  const result =
+    Math.abs(z0) < alpha
+      ? "No se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido"
+      : "Se rechaza la hipótesis de que los números provienen de un universo uniformemente distribuido";
+
+  return result;
+};
 
 export default function AverageTestScreen() {
   const [input, setInput] = useState(''); // Para almacenar el string de números
   const [alpha, setAlpha] = useState('1.96'); // Valor crítico Zα por defecto
   const [result, setResult] = useState<string | null>(null); // Resultado de la prueba
+
 
   const handleTest = () => {
     try {
@@ -16,18 +51,18 @@ export default function AverageTestScreen() {
       if (data.some(isNaN)) {
         throw new Error('Todos los valores deben ser números válidos.');
       }
+      
 
       // Convertir alpha a número
       const alphaValue = parseFloat(alpha);
       if (isNaN(alphaValue)) {
         throw new Error('El valor de alpha debe ser un número válido.');
       }
-
       // Usar el hook para realizar la prueba
-      const testResult = useAverageTest(data, alphaValue);
+      const testResult = averageTest(data, alphaValue);
       setResult(testResult);
-    } catch (error) {
-      Alert.alert('Error', error.message);
+    } catch (error: any) {
+      Alert.alert('Error', error);
     }
   };
 
